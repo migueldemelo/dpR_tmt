@@ -7,8 +7,6 @@ import org.eclipse.rdf4j.repository.Repository;
 
 public class DataAccessObject {
 
-//	@Inject Store store;
+	@Inject Store store;
 
-//	private Repository repository = store.getRepository();
-//	protected ValueFactory valueFactory = store.getValueFactory();
 }

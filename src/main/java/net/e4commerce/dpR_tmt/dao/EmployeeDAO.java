@@ -27,8 +27,6 @@ import net.e4commerce.dpR_tmt.model.Employee;
 @Singleton
 public class EmployeeDAO extends DataAccessObject implements DataAccessInterface<Employee> {
 
-	@Inject Store store;
-	
 	@Override
 	public void create(Employee employee) {
 		
@@ -66,7 +64,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
-					"delete {?id ?p ?o}\n" + 
+					"delete {?s ?p ?o}\n" + 
 					"WHERE {\n" + 
 					" ?s dp:employeeId ?id ; \n" +
 					" ?p ?o ;\n" +
