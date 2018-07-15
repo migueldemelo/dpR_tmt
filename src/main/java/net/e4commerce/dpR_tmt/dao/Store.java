@@ -1,11 +1,12 @@
 package net.e4commerce.dpR_tmt.dao;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Singleton;
 
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
-import org.eclipse.rdf4j.sail.inferencer.fc.ForwardChainingRDFSInferencer;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
+
+@Singleton
 public class Store {
 	
 	private static final String DEFAULT_NS = "http://e4commerce.net/dpR_tmt/";
@@ -20,7 +21,7 @@ public class Store {
 						);
 		repository.initialize();
 		valueFactory = repository.getValueFactory();
-//		System.out.println("STORE");
+		System.out.println("STORE");
 	}
 
 	public SailRepository getRepository() {

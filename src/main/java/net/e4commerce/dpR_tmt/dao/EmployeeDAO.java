@@ -1,11 +1,9 @@
 package net.e4commerce.dpR_tmt.dao;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
@@ -22,11 +20,9 @@ import org.eclipse.rdf4j.repository.RepositoryConnection;
 
 import net.e4commerce.dpR_tmt.model.Employee;
 
-@ApplicationScoped
-@Startup
 @Singleton
 public class EmployeeDAO extends DataAccessObject implements DataAccessInterface<Employee> {
-
+ 
 	@Override
 	public void create(Employee employee) {
 		
@@ -38,7 +34,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		Integer  n = rand.nextInt(50) + 1;
 		String id = employee.getEmployeeId() != null ? employee.getEmployeeId() : n.toString();
 		
-		IRI subject = store.getValueFactory().createIRI(Store.getDefaultNs(), id);
+		IRI subject = store.getValueFactory().createIRI(Store.getDefaultNs(), "employee_"+id);
 		Literal label = store.getValueFactory().createLiteral(employee.getName());
 		Literal idLiteral = store.getValueFactory().createLiteral(id);
 		
@@ -49,7 +45,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 			conn.add(subject, employeeId, idLiteral);
 			if (employee.getDepartmentId() != null)
 			{
-				conn.add(subject, hasDepartment, store.getValueFactory().createIRI(Store.getDefaultNs(), employee.getDepartmentId()));
+				conn.add(subject, hasDepartment, store.getValueFactory().createIRI(Store.getDefaultNs(), "department_"+employee.getDepartmentId()));
 			}
 			if (employee.getDateOfBirth() != null)
 			{
@@ -128,7 +124,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	}
 
 	@Override
-	public Employee search(Employee subject) {
+	public List<Employee> search(Employee subject) {
 		// TODO Auto-generated method stub
 		return null;
 	}

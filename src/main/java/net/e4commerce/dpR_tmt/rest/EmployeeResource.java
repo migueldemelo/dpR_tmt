@@ -13,7 +13,6 @@ import net.e4commerce.dpR_tmt.model.Employee;
 
 @Path("employee")
 @Singleton
-//@Immediate
 public class EmployeeResource {
 	
 	@Inject EmployeeDAO dao;
@@ -22,7 +21,6 @@ public class EmployeeResource {
 	@Path("detail")
 	@Produces(MediaType.APPLICATION_JSON)
     public Employee user(@QueryParam("id") String id) {
-//		System.out.println("DETAIL");
 		Employee employee = new Employee();
 		employee.setEmployeeId(id);
 		Employee emp = dao.get(employee);
@@ -37,7 +35,6 @@ public class EmployeeResource {
 		employee.setName(name);
 		employee.setDateOfBirth(dob);
 		employee.setDepartmentId(departmentId);
-//		System.out.println("CREATE");
 		dao.create(employee);
     }
 
@@ -46,7 +43,6 @@ public class EmployeeResource {
     public void create(@QueryParam("id") String id) {
 		Employee employee = new Employee();
 		employee.setEmployeeId(id);
-//		System.out.println("CREATE");
 		dao.delete(employee);
     }
 }
