@@ -36,7 +36,8 @@ Below is the list of rest end-points satisfying the requirements described above
 or you can download Postman (https://www.getpostman.com/apps) and load the test collection stored in /src/test/resources/dpR_tmt.postman_collection.json.
 
 #create a department:
-PUT "http://localhost:8080/resources/department?id=1235&name=SomeDepartment"
+PUT "http://localhost:8080/resources/department"
+
 {
 	"departmentId": "1235",
 	"departmentName": "SomeDepartment"
@@ -47,6 +48,7 @@ GET "http://localhost:8080/resources/department/1235"
 
 #create employee 1:
 PUT "http://localhost:8080/resources/employee"
+
 {
 	"employeeId": "1235",
 	"name": "employeeName",
@@ -62,6 +64,7 @@ POST "http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05"
 
 #create employee 2
 PUT "http://localhost:8080/resources/employee"
+
 {
 	"employeeId": "1238",
 	"name": "employeeName",
