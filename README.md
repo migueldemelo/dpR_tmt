@@ -53,7 +53,7 @@ curl "http://localhost:8080/resources/employee/updateDob?id=1235&dob=1971-11-05"
 #update employee department (not implemented):
 curl "http://localhost:8080/resources/employee/updateDepartment?id=1235&departmentId=1235"
 
-#search employee by name (not implemented):
+#search employee by name:
 curl "http://localhost:8080/resources/employee/search?name=employeeName"
 
 #search department by employee id (not implemented):

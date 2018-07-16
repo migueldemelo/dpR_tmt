@@ -1,5 +1,7 @@
 package net.e4commerce.dpR_tmt.rest;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.GET;
@@ -54,4 +56,13 @@ public class EmployeeResource {
 		employee.setDateOfBirth(dob);
 		dao.update(employee);
     }
+	
+	@GET
+	@Path("search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Employee> search(@QueryParam("name") String name) {
+		Employee employee = new Employee();
+		employee.setName(name);
+		return dao.search(employee);
+	}
 }

@@ -1,5 +1,6 @@
 package net.e4commerce.dpR_tmt.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -140,9 +141,51 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	}
 
 	@Override
-	public List<Employee> search(Employee subject) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Employee> search(Employee employee) {
+		List<Employee> employees = new ArrayList<Employee>();
+		
+		try (RepositoryConnection conn = store.getRepository().getConnection()) {
+			String queryString = 
+					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
+					"PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" + 
+					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
+					"SELECT ?id ?name ?dob ?department\n" + 
+					"WHERE {\n" + 
+					" ?s a dp:Employee ; \n" +
+					" dp:employeeId ?id ; \n" +
+					" rdfs:label ?name ; \n" +
+					" foaf:birthday ?dob ; \n" +
+					" .\n" +
+					" OPTIONAL{?s dp:hasDepartment/dp:departmentId ?department .} \n" +
+					"}";
+	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+	    	tupleQuery.setBinding("name", store.getValueFactory().createLiteral(employee.getName()));
+	    	
+	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
+	    	{
+	    		Employee emp = new Employee();	
+	    		while (result.hasNext()) 
+	    		{  
+	    			
+	    			BindingSet bindingSet = result.next();
+	    			
+	    			Value id = bindingSet.getValue("id");
+	    			Value name = bindingSet.getValue("name");
+	    			Value dob = bindingSet.getValue("dob");
+	    			Value department = bindingSet.getValue("department");
+	    			
+	    			emp.setEmployeeId(id.stringValue());
+	    			emp.setName(name.stringValue());
+	    			emp.setDateOfBirth(dob.stringValue());
+	    			
+	    			if (department  != null) 	    			
+		    			emp.setDepartmentId(department.stringValue());
+	    		}
+	    		employees.add(emp);
+	    	}
+		}
+		
+		return employees;
 	}
 
 
