@@ -38,23 +38,29 @@ curl "http://localhost:8080/resources/department/create?id=1235&name=SomeDepartm
 #view department details:
 curl "http://localhost:8080/resources/department/detail?id=1235"
 
-#create an employee:
-curl "http://localhost:8080/resources/employee/create?id=1235&name=employeeName&dob=1971-10-05&departmentId=1235"
+#create employee 1:
+PUT "http://localhost:8080/resources/employee?id=1235&name=employeeName&dob=1971-10-05&departmentId=1235"
 
-#view employee details:
-curl "http://localhost:8080/resources/employee/detail?id=1235"
+#employee 1 details:
+GET "http://localhost:8080/resources/employee/1235"
 
-#delete employee:
-curl "http://localhost:8080/resources/employee/delete?id=1235"
+#update employee 1 date of birth
+POST "http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05"
 
-#update employee DateOfBirth:
-curl "http://localhost:8080/resources/employee/updateDob?id=1235&dob=1971-11-05"
+#create employee 2
+PUT "http://localhost:8080/resources/employee?id=1238&name=employeeName&dob=1971-10-05"
 
-#update employee department:
-curl "http://localhost:8080/resources/employee/updateDepartment?id=1235&departmentId=1235"
+#employee 2 details
+POST "http://localhost:8080/resources/employee/1238"
+
+#add employee 2 to a department
+POST "http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235"
 
 #search employee by name:
-curl "http://localhost:8080/resources/employee/search?name=employeeName"
+GET "http://localhost:8080/resources/employee/search?name=employeeName"
 
 #search department by employee name:
-curl "http://localhost:8080/resources/department/search?employeeName=employeeName"
+GET "http://localhost:8080/resources/department/search?employeeName=employeeName"
+
+#delete employee 1:
+DELETE "http://localhost:8080/resources/employee/1235"
