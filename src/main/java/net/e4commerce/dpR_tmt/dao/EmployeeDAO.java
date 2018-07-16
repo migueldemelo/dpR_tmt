@@ -140,7 +140,6 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		}
 	}
 
-	@Override
 	public List<Employee> search(Employee employee) {
 		List<Employee> employees = new ArrayList<Employee>();
 		
@@ -163,9 +162,9 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{
-	    		Employee emp = new Employee();	
 	    		while (result.hasNext()) 
 	    		{  
+	    			Employee emp = new Employee();	
 	    			
 	    			BindingSet bindingSet = result.next();
 	    			
@@ -180,8 +179,9 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	    			
 	    			if (department  != null) 	    			
 		    			emp.setDepartmentId(department.stringValue());
+	    			
+	    			employees.add(emp);
 	    		}
-	    		employees.add(emp);
 	    	}
 		}
 		

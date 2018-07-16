@@ -1,5 +1,6 @@
 package net.e4commerce.dpR_tmt.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -17,6 +18,7 @@ import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 
 import net.e4commerce.dpR_tmt.model.Department;
+import net.e4commerce.dpR_tmt.model.Employee;
 
 @Singleton
 public class DepartmentDAO extends DataAccessObject implements DataAccessInterface<Department> {
@@ -92,10 +94,46 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public List<Department> search(Department subject) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Department> search(Employee employee) {
+		List<Department> departments = new ArrayList<Department>();
+		
+		try (RepositoryConnection conn = store.getRepository().getConnection()) {
+			String queryString = 
+					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
+					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
+					"SELECT ?id ?name \n" + 
+					"WHERE {\n" + 
+					" ?department a dp:Department ; \n" +
+					" dp:departmentId ?id ; \n" +
+					" dp:departmentName ?name ; \n" +
+					" .\n"
+					+ "?employee a dp:Employee ;\n"
+					+ "dp:employeeId ?employeeId ; \n"
+					+ "dp:hasDepartment ?department ;"
+					+ ". \n" +
+					"}";
+	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+	    	tupleQuery.setBinding("employeeId", store.getValueFactory().createLiteral(employee.getEmployeeId()));
+	    	
+	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
+	    	{
+	    		while (result.hasNext()) 
+	    		{  
+	    			Department dep = new Department();
+	    			BindingSet bindingSet = result.next();
+	    			
+	    			Value id = bindingSet.getValue("id");
+	    			Value name = bindingSet.getValue("name");
+	    			
+	    			dep.setDepartmentId(id.stringValue());
+	    			dep.setDepartmentName(name.stringValue());
+	    			
+	    			departments.add(dep);
+	    		}
+	    	}
+		}
+		
+		return departments;
 	}
 
 }
