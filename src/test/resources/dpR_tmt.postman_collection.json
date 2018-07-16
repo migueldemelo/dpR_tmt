@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "ec139c1b-157a-4a66-b645-f63e36962328",
+		"name": "dpR_tmt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create department",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/department?id=1235&name=SomeDepartment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"department"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1235"
+						},
+						{
+							"key": "name",
+							"value": "SomeDepartment"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "department details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/department/1235",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"department",
+						"1235"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create employee 1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/employee?id=1235&name=employeeName&dob=1971-10-05&departmentId=1235",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"employee"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1235"
+						},
+						{
+							"key": "name",
+							"value": "employeeName"
+						},
+						{
+							"key": "dob",
+							"value": "1971-10-05"
+						},
+						{
+							"key": "departmentId",
+							"value": "1235"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "employee 1 details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/employee/1235",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"employee",
+						"1235"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update employee 1 DOB",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"employee",
+						"1235",
+						"updateDob"
+					],
+					"query": [
+						{
+							"key": "dob",
+							"value": "1971-11-05"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete employee 1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/employee/1235",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"employee",
+						"1235"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create employee 2",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/employee?id=1238&name=employeeName&dob=1971-10-05",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"employee"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1238"
+						},
+						{
+							"key": "name",
+							"value": "employeeName"
+						},
+						{
+							"key": "dob",
+							"value": "1971-10-05"
+						},
+						{
+							"key": "departmentId",
+							"value": "1235",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Create employee without department"
+			},
+			"response": []
+		},
+		{
+			"name": "employee 2 details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/employee/1238",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"employee",
+						"1238"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee 2 department",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"employee",
+						"1238",
+						"addDepartment"
+					],
+					"query": [
+						{
+							"key": "departmentId",
+							"value": "1235"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search employee by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/employee/search?name=employeeName",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"employee",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "employeeName"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search department by employee name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/resources/department/search?employeeName=employeeName",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"resources",
+						"department",
+						"search"
+					],
+					"query": [
+						{
+							"key": "employeeName",
+							"value": "employeeName"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

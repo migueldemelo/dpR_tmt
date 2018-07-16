@@ -29,14 +29,17 @@ For department we want to store departmentId and departmentName.
 7. Create your repo on Github and do reguler commits
 8. Provide README to explain how to run your code
 
-#Usage:
+#Run app:
 mvn clean install jetty:run
 
-#create a department:
-curl "http://localhost:8080/resources/department/create?id=1235&name=SomeDepartment"
+Below is the list of rest end-points satisfying the requirements described above, you can run them manually using any standard HTTP client,
+or you can download Postman (https://www.getpostman.com/apps) and load the test collection stored in /src/test/resources/dpR_tmt.postman_collection.json.
 
-#view department details:
-curl "http://localhost:8080/resources/department/detail?id=1235"
+#create a department:
+PUT "http://localhost:8080/resources/department?id=1235&name=SomeDepartment"
+
+#department details:
+GET "http://localhost:8080/resources/department/1235"
 
 #create employee 1:
 PUT "http://localhost:8080/resources/employee?id=1235&name=employeeName&dob=1971-10-05&departmentId=1235"

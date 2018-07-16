@@ -5,7 +5,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -21,17 +23,16 @@ public class DepartmentResource {
 	@Inject DepartmentDAO dao;
 	
 	@GET
-	@Path("detail")
+	@Path("{departmentId}")
 	@Produces(MediaType.APPLICATION_JSON)
-    public Department user(@QueryParam("id") String id) {
+    public Department user(@PathParam("departmentId") String id) {
 		Department department = new Department();
 		department.setDepartmentId(id);
 		Department dep = dao.get(department);
         return dep;
     }
 
-	@GET
-	@Path("create")
+	@PUT
     public void create(@QueryParam("id") String id, @QueryParam("name") String name) {
 		Department department = new Department();
 		department.setDepartmentId(id);
