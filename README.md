@@ -50,11 +50,11 @@ curl "http://localhost:8080/resources/employee/delete?id=1235"
 #update employee DateOfBirth (not working):
 curl "http://localhost:8080/resources/employee/updateDob?id=1235&dob=1971-11-05"
 
-#update employee department (not implemented):
+#update employee department:
 curl "http://localhost:8080/resources/employee/updateDepartment?id=1235&departmentId=1235"
 
 #search employee by name:
 curl "http://localhost:8080/resources/employee/search?name=employeeName"
 
-#search department by employee id:
-curl "http://localhost:8080/resources/department/search?employeeId=1235"
+#search department by employee name:
+curl "http://localhost:8080/resources/department/search?employeeName=employeeName"

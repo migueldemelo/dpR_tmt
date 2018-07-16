@@ -22,7 +22,7 @@ public class EmployeeResource {
 	@GET
 	@Path("detail")
 	@Produces(MediaType.APPLICATION_JSON)
-    public Employee user(@QueryParam("id") String id) {
+    public Employee detail(@QueryParam("id") String id) {
 		Employee employee = new Employee();
 		employee.setEmployeeId(id);
 		Employee emp = dao.get(employee);
@@ -42,18 +42,27 @@ public class EmployeeResource {
 
 	@GET
 	@Path("delete")
-    public void create(@QueryParam("id") String id) {
+    public void delete(@QueryParam("id") String id) {
 		Employee employee = new Employee();
 		employee.setEmployeeId(id);
 		dao.delete(employee);
     }
-	
+
 	@GET
 	@Path("updateDob")
-    public void create(@QueryParam("id") String id, @QueryParam("dob") String dob) {
+    public void updateDob(@QueryParam("id") String id, @QueryParam("dob") String dob) {
 		Employee employee = new Employee();
 		employee.setEmployeeId(id);
 		employee.setDateOfBirth(dob);
+		dao.update(employee);
+    }
+
+	@GET
+	@Path("updateDepartment")
+    public void updateDepartment(@QueryParam("id") String id, @QueryParam("departmentId") String departmentId) {
+		Employee employee = new Employee();
+		employee.setEmployeeId(id);
+		employee.setDepartmentId(departmentId);
 		dao.update(employee);
     }
 	

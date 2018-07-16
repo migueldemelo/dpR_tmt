@@ -120,6 +120,14 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 
 	@Override
 	public void update(Employee employee) {
+		if(employee.getDateOfBirth() != null) {
+			updateDob(employee.getEmployeeId(), employee.getDateOfBirth());
+		} else if(employee.getDepartmentId() != null) {
+			updateDepartment(employee.getEmployeeId(), employee.getDepartmentId());
+		}
+	}
+	
+	private void updateDob(String employeeId, String dob) {
 		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
@@ -134,12 +142,31 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" .\n" +
 					"}";
 	    	Update update = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
-	    	update.setBinding("id", store.getValueFactory().createLiteral(employee.getEmployeeId()));
-	    	update.setBinding("newvalue", store.getValueFactory().createLiteral(employee.getDateOfBirth()));
+	    	update.setBinding("id", store.getValueFactory().createLiteral(employeeId));
+	    	update.setBinding("newvalue", store.getValueFactory().createLiteral(dob));
 	    	update.execute();
 		}
 	}
-
+	
+	private void updateDepartment(String employeeId, String departmentId) {
+		try (RepositoryConnection conn = store.getRepository().getConnection()) {
+			String queryString = 
+					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
+					"PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" + 
+					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
+					"INSERT {?s dp:hasDepartment ?department}\n" + 
+					"WHERE {\n" + 
+					" ?s a dp:Employee ; \n" +
+					" dp:employeeId ?id ; \n" +
+					" .\n" +
+					"}";
+			Update update = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
+			update.setBinding("id", store.getValueFactory().createLiteral(employeeId));
+			update.setBinding("department", store.getValueFactory().createIRI(Store.getDefaultNs(), "department_"+departmentId));
+			update.execute();
+		}
+	}
+	
 	public List<Employee> search(Employee employee) {
 		List<Employee> employees = new ArrayList<Employee>();
 		

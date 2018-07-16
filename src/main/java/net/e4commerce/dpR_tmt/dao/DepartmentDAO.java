@@ -108,12 +108,12 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 					" dp:departmentName ?name ; \n" +
 					" .\n"
 					+ "?employee a dp:Employee ;\n"
-					+ "dp:employeeId ?employeeId ; \n"
+					+ "rdfs:label ?employeeName ; \n"
 					+ "dp:hasDepartment ?department ;"
 					+ ". \n" +
 					"}";
 	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("employeeId", store.getValueFactory().createLiteral(employee.getEmployeeId()));
+	    	tupleQuery.setBinding("employeeName", store.getValueFactory().createLiteral(employee.getName()));
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{

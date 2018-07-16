@@ -42,9 +42,9 @@ public class DepartmentResource {
 	@GET
 	@Path("search")
 	@Produces(MediaType.APPLICATION_JSON)
-    public List<Department> search(@QueryParam("employeeId") String id) {
+    public List<Department> search(@QueryParam("employeeName") String name) {
 		Employee employee = new Employee();
-		employee.setEmployeeId(id);
+		employee.setName(name);
 		return dao.search(employee);
     }
 }
