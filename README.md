@@ -56,5 +56,5 @@ curl "http://localhost:8080/resources/employee/updateDepartment?id=1235&departme
 #search employee by name:
 curl "http://localhost:8080/resources/employee/search?name=employeeName"
 
-#search department by employee id (not implemented):
+#search department by employee id:
 curl "http://localhost:8080/resources/department/search?employeeId=1235"
