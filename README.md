@@ -30,7 +30,7 @@ For department we want to store departmentId and departmentName.
 8. Provide README to explain how to run your code
 
 #Usage:
-clean install jetty:run
+mvn clean install jetty:run
 
 #create a department:
 curl "http://localhost:8080/resources/department/create?id=1235&name=SomeDepartment"
