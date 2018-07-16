@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -34,12 +35,8 @@ public class EmployeeResource {
     }
 
 	@PUT
-    public void set(@QueryParam("id") String id, @QueryParam("name") String name, @QueryParam("dob") String dob, @QueryParam("departmentId") String departmentId) {
-		Employee employee = new Employee();
-		employee.setEmployeeId(id);
-		employee.setName(name);
-		employee.setDateOfBirth(dob);
-		employee.setDepartmentId(departmentId);
+	@Consumes(MediaType.APPLICATION_JSON)
+    public void set(Employee employee) {
 		dao.create(employee);
     }
 

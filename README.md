@@ -37,12 +37,22 @@ or you can download Postman (https://www.getpostman.com/apps) and load the test 
 
 #create a department:
 PUT "http://localhost:8080/resources/department?id=1235&name=SomeDepartment"
+{
+	"departmentId": "1235",
+	"departmentName": "SomeDepartment"
+}
 
 #department details:
 GET "http://localhost:8080/resources/department/1235"
 
 #create employee 1:
-PUT "http://localhost:8080/resources/employee?id=1235&name=employeeName&dob=1971-10-05&departmentId=1235"
+PUT "http://localhost:8080/resources/employee"
+{
+	"employeeId": "1235",
+	"name": "employeeName",
+	"dateOfBirth": "1971-10-05",
+	"departmentId": "1235"
+}
 
 #employee 1 details:
 GET "http://localhost:8080/resources/employee/1235"
@@ -51,7 +61,12 @@ GET "http://localhost:8080/resources/employee/1235"
 POST "http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05"
 
 #create employee 2
-PUT "http://localhost:8080/resources/employee?id=1238&name=employeeName&dob=1971-10-05"
+PUT "http://localhost:8080/resources/employee"
+{
+	"employeeId": "1238",
+	"name": "employeeName",
+	"dateOfBirth": "1971-10-05"
+}
 
 #employee 2 details
 POST "http://localhost:8080/resources/employee/1238"

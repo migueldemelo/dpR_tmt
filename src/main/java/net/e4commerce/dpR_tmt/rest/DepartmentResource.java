@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -33,10 +34,8 @@ public class DepartmentResource {
     }
 
 	@PUT
-    public void create(@QueryParam("id") String id, @QueryParam("name") String name) {
-		Department department = new Department();
-		department.setDepartmentId(id);
-		department.setDepartmentName(name);
+	@Consumes(MediaType.APPLICATION_JSON)
+    public void create(Department department) {
 		dao.create(department);
     }
 	
