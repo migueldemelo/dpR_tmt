@@ -101,7 +101,7 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
 					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
-					"SELECT ?id ?name \n" + 
+					"SELECT DISTINCT ?id ?name \n" + 
 					"WHERE {\n" + 
 					" ?department a dp:Department ; \n" +
 					" dp:departmentId ?id ; \n" +
