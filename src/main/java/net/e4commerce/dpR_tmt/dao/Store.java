@@ -21,7 +21,6 @@ public class Store {
 						);
 		repository.initialize();
 		valueFactory = repository.getValueFactory();
-		System.out.println("STORE");
 	}
 
 	public SailRepository getRepository() {

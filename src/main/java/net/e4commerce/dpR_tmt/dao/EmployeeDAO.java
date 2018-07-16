@@ -60,7 +60,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
-					"delete {?s ?p ?o}\n" + 
+					"DELETE {?s ?p ?o}\n" + 
 					"WHERE {\n" + 
 					" ?s dp:employeeId ?id ; \n" +
 					" ?p ?o ;\n" +
@@ -119,8 +119,24 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 
 	@Override
 	public void update(Employee employee) {
-		// TODO Auto-generated method stub
-
+		try (RepositoryConnection conn = store.getRepository().getConnection()) {
+			String queryString = 
+					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
+					"PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" + 
+					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
+					"DELETE {?s foaf:birthday ?oldValue}\n" + 
+					"INSERT {?s foaf:birthday ?newdValue}\n" + 
+					"WHERE {\n" + 
+					" ?s a dp:Employee ; \n" +
+					" dp:employeeId ?id ; \n" +
+					" foaf:birthday ?oldValue ; \n" +
+					" .\n" +
+					"}";
+	    	Update update = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
+	    	update.setBinding("id", store.getValueFactory().createLiteral(employee.getEmployeeId()));
+	    	update.setBinding("newvalue", store.getValueFactory().createLiteral(employee.getDateOfBirth()));
+	    	update.execute();
+		}
 	}
 
 	@Override

@@ -45,4 +45,13 @@ public class EmployeeResource {
 		employee.setEmployeeId(id);
 		dao.delete(employee);
     }
+	
+	@GET
+	@Path("updateDob")
+    public void create(@QueryParam("id") String id, @QueryParam("dob") String dob) {
+		Employee employee = new Employee();
+		employee.setEmployeeId(id);
+		employee.setDateOfBirth(dob);
+		dao.update(employee);
+    }
 }
