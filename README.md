@@ -47,7 +47,7 @@ curl "http://localhost:8080/resources/employee/detail?id=1235"
 #delete employee:
 curl "http://localhost:8080/resources/employee/delete?id=1235"
 
-#update employee DateOfBirth (not working):
+#update employee DateOfBirth:
 curl "http://localhost:8080/resources/employee/updateDob?id=1235&dob=1971-11-05"
 
 #update employee department:

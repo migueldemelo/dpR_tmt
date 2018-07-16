@@ -134,7 +134,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					"PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" + 
 					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
 					"DELETE {?s foaf:birthday ?oldValue}\n" + 
-					"INSERT {?s foaf:birthday ?newdValue}\n" + 
+					"INSERT {?s foaf:birthday ?newValue}\n" + 
 					"WHERE {\n" + 
 					" ?s a dp:Employee ; \n" +
 					" dp:employeeId ?id ; \n" +
@@ -143,7 +143,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					"}";
 	    	Update update = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
 	    	update.setBinding("id", store.getValueFactory().createLiteral(employeeId));
-	    	update.setBinding("newvalue", store.getValueFactory().createLiteral(dob));
+	    	update.setBinding("newValue", store.getValueFactory().createLiteral(dob));
 	    	update.execute();
 		}
 	}
