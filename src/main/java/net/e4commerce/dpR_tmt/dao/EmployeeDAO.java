@@ -2,7 +2,6 @@ package net.e4commerce.dpR_tmt.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.ejb.Singleton;
 
@@ -18,6 +17,7 @@ import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.query.Update;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
+import org.eclipse.rdf4j.repository.sail.SailRepository;
 
 import net.e4commerce.dpR_tmt.model.Employee;
 
@@ -27,22 +27,20 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	@Override
 	public void create(Employee employee) {
 		
+		String id = employee.getEmployeeId();
+		
 		IRI type = store.getValueFactory().createIRI(Store.getDefaultNs(), "Employee");
 		IRI hasDepartment = store.getValueFactory().createIRI(Store.getDefaultNs(), "hasDepartment");
 		IRI employeeId = store.getValueFactory().createIRI(Store.getDefaultNs(), "employeeId");
-		
-		Random rand = new Random();
-		Integer  n = rand.nextInt(50) + 1;
-		String id = employee.getEmployeeId() != null ? employee.getEmployeeId() : n.toString();
-		
 		IRI subject = store.getValueFactory().createIRI(Store.getDefaultNs(), "employee_"+id);
-		Literal label = store.getValueFactory().createLiteral(employee.getName());
-		Literal idLiteral = store.getValueFactory().createLiteral(id);
 		
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
+		Literal nameLiteral = store.getValueFactory().createLiteral(employee.getName());
+		Literal idLiteral = store.getValueFactory().createLiteral(id);
+		SailRepository repository = store.getRepository();
+		try (RepositoryConnection conn = repository.getConnection()) {
 			conn.add(subject, RDF.TYPE, FOAF.PERSON);
 			conn.add(subject, RDF.TYPE, type);
-			conn.add(subject, RDFS.LABEL, label);
+			conn.add(subject, RDFS.LABEL, nameLiteral);
 			conn.add(subject, employeeId, idLiteral);
 			if (employee.getDepartmentId() != null)
 			{

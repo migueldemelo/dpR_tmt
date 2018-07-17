@@ -72,7 +72,7 @@ PUT "http://localhost:8080/resources/employee"
 }
 
 #employee 2 details
-POST "http://localhost:8080/resources/employee/1238"
+GET "http://localhost:8080/resources/employee/1238"
 
 #add employee 2 to a department
 POST "http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235"
