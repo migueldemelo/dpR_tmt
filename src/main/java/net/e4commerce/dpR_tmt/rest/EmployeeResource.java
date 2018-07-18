@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import net.e4commerce.dpR_tmt.dao.DepartmentDAO;
 import net.e4commerce.dpR_tmt.dao.EmployeeDAO;
 import net.e4commerce.dpR_tmt.model.Employee;
 
@@ -22,30 +23,30 @@ import net.e4commerce.dpR_tmt.model.Employee;
 @Singleton
 public class EmployeeResource {
 	
-	@Inject EmployeeDAO dao;
+	private final EmployeeDAO dao;
+	
+	@Inject 
+	public EmployeeResource(EmployeeDAO dao) {
+		this.dao = dao;
+	}
 	
 	@GET
 	@Path("{employeeId}")
 	@Produces(MediaType.APPLICATION_JSON)
-    public Employee get(@PathParam("employeeId") String id) {
-		Employee employee = new Employee();
-		employee.setEmployeeId(id);
-		Employee emp = dao.get(employee);
-        return emp;
+    public Employee get(@PathParam("employeeId") String id) throws Exception {
+        return dao.get(id);
     }
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-    public void set(Employee employee) {
+    public void create(Employee employee) {
 		dao.create(employee);
     }
 
 	@DELETE
 	@Path("{employeeId}")
     public void delete(@PathParam("employeeId") String id) {
-		Employee employee = new Employee();
-		employee.setEmployeeId(id);
-		dao.delete(employee);
+		dao.delete(id);
     }
 
 	@POST
@@ -59,7 +60,7 @@ public class EmployeeResource {
 
 	@POST
 	@Path("{employeeId}/addDepartment")
-    public void updateDepartment(@PathParam("employeeId") String id, @QueryParam("departmentId") String departmentId) {
+    public void addDepartment(@PathParam("employeeId") String id, @QueryParam("departmentId") String departmentId) {
 		Employee employee = new Employee();
 		employee.setEmployeeId(id);
 		employee.setDepartmentId(departmentId);
@@ -70,8 +71,6 @@ public class EmployeeResource {
 	@Path("search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Employee> search(@QueryParam("name") String name) {
-		Employee employee = new Employee();
-		employee.setName(name);
-		return dao.search(employee);
+		return dao.search(name);
 	}
 }

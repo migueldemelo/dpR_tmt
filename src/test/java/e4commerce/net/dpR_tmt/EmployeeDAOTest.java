@@ -1,5 +1,6 @@
 package e4commerce.net.dpR_tmt;
 
+import static org.mockito.Mockito.*;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -10,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import net.e4commerce.dpR_tmt.dao.EmployeeDAO;
@@ -63,7 +63,7 @@ public class EmployeeDAOTest {
 	public void testGet() {
 		
 		
-		Employee emp = dao.get(employee);
+//		Employee emp = dao.get(employee);
 		
 	}
 }

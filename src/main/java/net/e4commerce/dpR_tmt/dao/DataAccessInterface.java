@@ -6,7 +6,7 @@ import javax.inject.Singleton;
 public interface DataAccessInterface<T>
 {
 	public void create(T subject);
-	public void delete(T subject);
-	public T get(T subject);
+	public void delete(String id);
+	public T get(String id) throws Exception;
 	public void update(T subject);
 }

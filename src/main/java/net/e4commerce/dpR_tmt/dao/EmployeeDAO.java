@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
@@ -24,6 +25,12 @@ import net.e4commerce.dpR_tmt.model.Employee;
 @Singleton
 public class EmployeeDAO extends DataAccessObject implements DataAccessInterface<Employee> {
  
+	@Inject
+	public EmployeeDAO(Store store) {
+		super(store);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void create(Employee employee) {
 		
@@ -55,7 +62,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	}
 
 	@Override
-	public void delete(Employee employee) {
+	public void delete(String id) {
 		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
@@ -66,13 +73,13 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" .\n" +
 					"}";
 	    	Update update = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
-	    	update.setBinding("id", store.getValueFactory().createLiteral(employee.getEmployeeId()));
+	    	update.setBinding("id", store.getValueFactory().createLiteral(id));
 	    	update.execute();
 		}
 	}
 
-	public Employee get(Employee employee) {
-		Employee emp = new Employee();
+	public Employee get(String id) throws Exception {
+		Employee employee = new Employee();
 		
 		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
@@ -89,31 +96,24 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" OPTIONAL{?s dp:hasDepartment/dp:departmentId ?department .} \n" +
 					"}";
 	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("id", store.getValueFactory().createLiteral(employee.getEmployeeId()));
+	    	tupleQuery.setBinding("id", store.getValueFactory().createLiteral(id));
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{
 	    		while (result.hasNext()) 
 	    		{  
-	    			
 	    			BindingSet bindingSet = result.next();
 	    			
-	    			Value id = bindingSet.getValue("id");
-	    			Value name = bindingSet.getValue("name");
-	    			Value dob = bindingSet.getValue("dob");
-	    			Value department = bindingSet.getValue("department");
-	    			
-	    			emp.setEmployeeId(id.stringValue());
-	    			emp.setName(name.stringValue());
-	    			emp.setDateOfBirth(dob.stringValue());
-	    			
-	    			if (department  != null) 	    			
-		    			emp.setDepartmentId(department.stringValue());
+	    			employee.setEmployeeId(bindingSet.getValue("id").stringValue());
+	    			employee.setName(bindingSet.getValue("name").stringValue());
+	    			employee.setDateOfBirth(bindingSet.getValue("dob").stringValue());
+	    			if (bindingSet.getValue("department")  != null) 	    			
+	    				employee.setDepartmentId(bindingSet.getValue("department").stringValue());
 	    		}
 	    	}
 		}
 		
-		return emp;
+		return employee;
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		}
 	}
 	
-	public List<Employee> search(Employee employee) {
+	public List<Employee> search(String name) {
 		List<Employee> employees = new ArrayList<Employee>();
 		
 		try (RepositoryConnection conn = store.getRepository().getConnection()) {
@@ -183,7 +183,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" OPTIONAL{?s dp:hasDepartment/dp:departmentId ?department .} \n" +
 					"}";
 	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("name", store.getValueFactory().createLiteral(employee.getName()));
+	    	tupleQuery.setBinding("name", store.getValueFactory().createLiteral(name));
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{
@@ -193,17 +193,12 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	    			
 	    			BindingSet bindingSet = result.next();
 	    			
-	    			Value id = bindingSet.getValue("id");
-	    			Value name = bindingSet.getValue("name");
-	    			Value dob = bindingSet.getValue("dob");
-	    			Value department = bindingSet.getValue("department");
+	    			emp.setEmployeeId(bindingSet.getValue("id").stringValue());
+	    			emp.setName(bindingSet.getValue("name").stringValue());
+	    			emp.setDateOfBirth(bindingSet.getValue("dob").stringValue());
 	    			
-	    			emp.setEmployeeId(id.stringValue());
-	    			emp.setName(name.stringValue());
-	    			emp.setDateOfBirth(dob.stringValue());
-	    			
-	    			if (department  != null) 	    			
-		    			emp.setDepartmentId(department.stringValue());
+	    			if (bindingSet.getValue("department")  != null) 	    			
+		    			emp.setDepartmentId(bindingSet.getValue("department").stringValue());
 	    			
 	    			employees.add(emp);
 	    		}
@@ -212,6 +207,4 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		
 		return employees;
 	}
-
-
 }

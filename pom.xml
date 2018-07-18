@@ -71,12 +71,39 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.6</version>
+			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock</artifactId>
+			<version>1.6.6</version>
+			<type>pom</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>1.7.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.7.4</version>
+		</dependency>
+		<dependency>
+  <groupId>org.assertj</groupId>
+  <artifactId>assertj-core</artifactId>
+  <!-- use 2.9.1 for Java 7 projects -->
+  <version>3.10.0</version>
+  <scope>test</scope>
+</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -93,7 +120,7 @@
 						<phase>integration-test</phase>
 						<configuration>
 							<includes>
-								<include>**/integration/**/*.*</include>
+								<include>**/*Integration*.*</include>
 							</includes>
 						</configuration>
 					</execution>
@@ -115,7 +142,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<excludes>
-						<exclude>**/integration/**/*.*</exclude>
+						<exclude>**/*Integration*.*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

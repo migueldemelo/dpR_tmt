@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.eclipse.rdf4j.model.IRI;
@@ -22,6 +23,13 @@ import net.e4commerce.dpR_tmt.model.Employee;
 
 @Singleton
 public class DepartmentDAO extends DataAccessObject implements DataAccessInterface<Department> {
+
+	@Inject
+	public DepartmentDAO(Store store) {
+		super(store);
+		// TODO Auto-generated constructor stub
+	}
+	
 
 	@Override
 	public void create(Department department) {
@@ -48,13 +56,12 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 	}
 
 	@Override
-	public void delete(Department department) {
+	public void delete(String id) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public Department get(Department department) {
-		Department dep = new Department();
+	public Department get(String id) throws Exception {
 		
 		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
@@ -68,25 +75,23 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 					" .\n" +
 					"}";
 	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("id", store.getValueFactory().createLiteral(department.getDepartmentId()));
+	    	tupleQuery.setBinding("id", store.getValueFactory().createLiteral(id));
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{
 	    		while (result.hasNext()) 
 	    		{  
 	    			BindingSet bindingSet = result.next();
+	    			Department department = new Department();
+	    			department.setDepartmentId(bindingSet.getValue("id").stringValue());
+	    			department.setDepartmentName(bindingSet.getValue("name").stringValue());
 	    			
-	    			Value id = bindingSet.getValue("id");
-	    			Value name = bindingSet.getValue("name");
-	    			
-	    			dep.setDepartmentId(id.stringValue());
-	    			dep.setDepartmentName(name.stringValue());
-	    			
+	    			return department;
 	    		}
 	    	}
 		}
 		
-		return dep;
+		throw new Exception();
 	}
 
 	@Override
@@ -94,7 +99,7 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 		// TODO Auto-generated method stub
 	}
 
-	public List<Department> search(Employee employee) {
+	public List<Department> search(String name) {
 		List<Department> departments = new ArrayList<Department>();
 		
 		try (RepositoryConnection conn = store.getRepository().getConnection()) {
@@ -113,7 +118,7 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 					+ ". \n" +
 					"}";
 	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("employeeName", store.getValueFactory().createLiteral(employee.getName()));
+	    	tupleQuery.setBinding("employeeName", store.getValueFactory().createLiteral(name));
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{
@@ -122,11 +127,8 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 	    			Department dep = new Department();
 	    			BindingSet bindingSet = result.next();
 	    			
-	    			Value id = bindingSet.getValue("id");
-	    			Value name = bindingSet.getValue("name");
-	    			
-	    			dep.setDepartmentId(id.stringValue());
-	    			dep.setDepartmentName(name.stringValue());
+	    			dep.setDepartmentId(bindingSet.getValue("id").stringValue());
+	    			dep.setDepartmentName(bindingSet.getValue("name").stringValue());
 	    			
 	    			departments.add(dep);
 	    		}

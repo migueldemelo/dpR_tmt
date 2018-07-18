@@ -1,4 +1,4 @@
-package integration;
+package e4commerce.net.dpR_tmt.rest;
 
 import static org.junit.Assert.assertEquals;
 import java.io.IOException;

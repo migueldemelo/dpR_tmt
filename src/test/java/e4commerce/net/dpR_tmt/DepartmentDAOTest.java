@@ -40,7 +40,7 @@ public class DepartmentDAOTest {
 		DepartmentDAO dao = mock(DepartmentDAO.class);
 		Department department = mock(Department.class);
 		
-		Department dep = dao.get(department);
+//		Department dep = dao.get(department);
 		
 	}
 }

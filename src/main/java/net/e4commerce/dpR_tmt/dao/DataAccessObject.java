@@ -4,8 +4,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class DataAccessObject {
+public abstract class DataAccessObject {
 
-	@Inject Store store;
+	protected final Store store;
+	
+	@Inject 
+	public DataAccessObject(Store store) {
+		this.store = store;
+	}
 
 }

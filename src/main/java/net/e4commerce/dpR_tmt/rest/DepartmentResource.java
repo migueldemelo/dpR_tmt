@@ -21,16 +21,18 @@ import net.e4commerce.dpR_tmt.model.Employee;
 @Singleton
 public class DepartmentResource {
 	
-	@Inject DepartmentDAO dao;
+	private final DepartmentDAO dao;
+	
+	@Inject 
+	public DepartmentResource(DepartmentDAO dao) {
+		this.dao = dao;
+	}
 	
 	@GET
 	@Path("{departmentId}")
 	@Produces(MediaType.APPLICATION_JSON)
-    public Department user(@PathParam("departmentId") String id) {
-		Department department = new Department();
-		department.setDepartmentId(id);
-		Department dep = dao.get(department);
-        return dep;
+    public Department get(@PathParam("departmentId") String id) throws Exception {
+		return dao.get(id);
     }
 
 	@PUT
@@ -43,8 +45,6 @@ public class DepartmentResource {
 	@Path("search")
 	@Produces(MediaType.APPLICATION_JSON)
     public List<Department> search(@QueryParam("employeeName") String name) {
-		Employee employee = new Employee();
-		employee.setName(name);
-		return dao.search(employee);
+		return dao.search(name);
     }
 }
