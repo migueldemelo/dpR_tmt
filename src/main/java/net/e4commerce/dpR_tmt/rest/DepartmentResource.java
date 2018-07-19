@@ -45,6 +45,6 @@ public class DepartmentResource {
 	@Path("search")
 	@Produces(MediaType.APPLICATION_JSON)
     public List<Department> search(@QueryParam("employeeName") String name) {
-		return dao.search(name);
+		return dao.searchEmployeeDepartment(name);
     }
 }

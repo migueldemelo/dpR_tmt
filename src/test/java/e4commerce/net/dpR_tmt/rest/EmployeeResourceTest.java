@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -22,6 +23,7 @@ import net.e4commerce.dpR_tmt.rest.EmployeeResource;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(EmployeeResource.class)
 public class EmployeeResourceTest {
+	
 	@Mock
 	private EmployeeDAO dao;
 	
@@ -63,6 +65,8 @@ public class EmployeeResourceTest {
 		final String id = "1235";
 		final String dob = "1971-11-05";
 		PowerMockito.whenNew(Employee.class).withNoArguments().thenReturn(employee);
+		doNothing().when(employee).setEmployeeId(id);
+		doNothing().when(employee).setDateOfBirth(dob);
 		doNothing().when(dao).update(employee);
 		resource.updateDob(id, dob);
 		verify(employee).setEmployeeId(id);

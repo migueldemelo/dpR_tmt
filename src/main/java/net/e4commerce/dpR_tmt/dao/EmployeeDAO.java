@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
-import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.FOAF;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
@@ -26,9 +26,8 @@ import net.e4commerce.dpR_tmt.model.Employee;
 public class EmployeeDAO extends DataAccessObject implements DataAccessInterface<Employee> {
  
 	@Inject
-	public EmployeeDAO(Store store) {
-		super(store);
-		// TODO Auto-generated constructor stub
+	public EmployeeDAO(ValueFactory valueFactory, RepositoryConnection connectionection) {
+		super(valueFactory, connectionection);
 	}
 
 	@Override
@@ -36,34 +35,33 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		
 		String id = employee.getEmployeeId();
 		
-		IRI type = store.getValueFactory().createIRI(Store.getDefaultNs(), "Employee");
-		IRI hasDepartment = store.getValueFactory().createIRI(Store.getDefaultNs(), "hasDepartment");
-		IRI employeeId = store.getValueFactory().createIRI(Store.getDefaultNs(), "employeeId");
-		IRI subject = store.getValueFactory().createIRI(Store.getDefaultNs(), "employee_"+id);
+		IRI type = valueFactory.createIRI(Store.getDefaultNs(), "Employee");
+		IRI hasDepartment = valueFactory.createIRI(Store.getDefaultNs(), "hasDepartment");
+		IRI employeeId = valueFactory.createIRI(Store.getDefaultNs(), "employeeId");
+		IRI subject = valueFactory.createIRI(Store.getDefaultNs(), "employee_"+id);
 		
-		Literal nameLiteral = store.getValueFactory().createLiteral(employee.getName());
-		Literal idLiteral = store.getValueFactory().createLiteral(id);
-		SailRepository repository = store.getRepository();
-		try (RepositoryConnection conn = repository.getConnection()) {
-			conn.add(subject, RDF.TYPE, FOAF.PERSON);
-			conn.add(subject, RDF.TYPE, type);
-			conn.add(subject, RDFS.LABEL, nameLiteral);
-			conn.add(subject, employeeId, idLiteral);
+		Literal nameLiteral = valueFactory.createLiteral(employee.getName());
+		Literal idLiteral = valueFactory.createLiteral(id);
+
+			connection.add(subject, RDF.TYPE, FOAF.PERSON);
+			connection.add(subject, RDF.TYPE, type);
+			connection.add(subject, RDFS.LABEL, nameLiteral);
+			connection.add(subject, employeeId, idLiteral);
 			if (employee.getDepartmentId() != null)
 			{
-				conn.add(subject, hasDepartment, store.getValueFactory().createIRI(Store.getDefaultNs(), "department_"+employee.getDepartmentId()));
+				connection.add(subject, hasDepartment, valueFactory.createIRI(Store.getDefaultNs(), "department_"+employee.getDepartmentId()));
 			}
 			if (employee.getDateOfBirth() != null)
 			{
-				conn.add(subject, FOAF.BIRTHDAY, store.getValueFactory().createLiteral(employee.getDateOfBirth()));
+				connection.add(subject, FOAF.BIRTHDAY, valueFactory.createLiteral(employee.getDateOfBirth()));
 			}
-		}
+		
 
 	}
 
 	@Override
 	public void delete(String id) {
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
+
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
 					"DELETE {?s ?p ?o}\n" + 
@@ -72,16 +70,13 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" ?p ?o ;\n" +
 					" .\n" +
 					"}";
-	    	Update update = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
-	    	update.setBinding("id", store.getValueFactory().createLiteral(id));
+	    	Update update = connection.prepareUpdate(QueryLanguage.SPARQL, queryString);
+	    	update.setBinding("id", valueFactory.createLiteral(id));
 	    	update.execute();
-		}
 	}
 
 	public Employee get(String id) throws Exception {
 		Employee employee = new Employee();
-		
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
 					"PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" + 
@@ -95,8 +90,8 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" .\n" +
 					" OPTIONAL{?s dp:hasDepartment/dp:departmentId ?department .} \n" +
 					"}";
-	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("id", store.getValueFactory().createLiteral(id));
+	    	TupleQuery tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+	    	tupleQuery.setBinding("id", valueFactory.createLiteral(id));
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{
@@ -111,7 +106,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	    				employee.setDepartmentId(bindingSet.getValue("department").stringValue());
 	    		}
 	    	}
-		}
+		
 		
 		return employee;
 	}
@@ -126,7 +121,6 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	}
 	
 	private void updateDob(String employeeId, String dob) {
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
 					"PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" + 
@@ -139,15 +133,13 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" foaf:birthday ?oldValue ; \n" +
 					" .\n" +
 					"}";
-	    	Update update = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
-	    	update.setBinding("id", store.getValueFactory().createLiteral(employeeId));
-	    	update.setBinding("newValue", store.getValueFactory().createLiteral(dob));
+	    	Update update = connection.prepareUpdate(QueryLanguage.SPARQL, queryString);
+	    	update.setBinding("id", valueFactory.createLiteral(employeeId));
+	    	update.setBinding("newValue", valueFactory.createLiteral(dob));
 	    	update.execute();
-		}
 	}
 	
 	private void updateDepartment(String employeeId, String departmentId) {
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
 					"PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" + 
@@ -158,17 +150,15 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" dp:employeeId ?id ; \n" +
 					" .\n" +
 					"}";
-			Update update = conn.prepareUpdate(QueryLanguage.SPARQL, queryString);
-			update.setBinding("id", store.getValueFactory().createLiteral(employeeId));
-			update.setBinding("department", store.getValueFactory().createIRI(Store.getDefaultNs(), "department_"+departmentId));
+			Update update = connection.prepareUpdate(QueryLanguage.SPARQL, queryString);
+			update.setBinding("id", valueFactory.createLiteral(employeeId));
+			update.setBinding("department", valueFactory.createIRI(Store.getDefaultNs(), "department_"+departmentId));
 			update.execute();
-		}
 	}
 	
 	public List<Employee> search(String name) {
 		List<Employee> employees = new ArrayList<Employee>();
 		
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
 					"PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n" + 
@@ -182,8 +172,8 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					" .\n" +
 					" OPTIONAL{?s dp:hasDepartment/dp:departmentId ?department .} \n" +
 					"}";
-	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("name", store.getValueFactory().createLiteral(name));
+	    	TupleQuery tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+	    	tupleQuery.setBinding("name", valueFactory.createLiteral(name));
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{
@@ -203,7 +193,6 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	    			employees.add(emp);
 	    		}
 	    	}
-		}
 		
 		return employees;
 	}

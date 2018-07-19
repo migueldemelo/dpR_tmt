@@ -1,4 +1,4 @@
-package e4commerce.net.dpR_tmt;
+package e4commerce.net.dpR_tmt.dao;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.Matchers.isA;

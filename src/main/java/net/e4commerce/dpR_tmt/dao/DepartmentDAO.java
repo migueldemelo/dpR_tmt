@@ -2,14 +2,14 @@ package net.e4commerce.dpR_tmt.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
-import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
 import org.eclipse.rdf4j.query.BindingSet;
@@ -19,76 +19,67 @@ import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 
 import net.e4commerce.dpR_tmt.model.Department;
-import net.e4commerce.dpR_tmt.model.Employee;
 
 @Singleton
 public class DepartmentDAO extends DataAccessObject implements DataAccessInterface<Department> {
 
+	private final IRI type;
+	private final IRI departmentId;
+	private final IRI departmentName;
+	
 	@Inject
-	public DepartmentDAO(Store store) {
-		super(store);
-		// TODO Auto-generated constructor stub
+	public DepartmentDAO(ValueFactory valueFactory, RepositoryConnection connection) {
+		super(valueFactory, connection);
+		
+		this.type = valueFactory.createIRI(Store.getDefaultNs(), "Department");
+		this.departmentId = valueFactory.createIRI(Store.getDefaultNs(), "departmentId");
+		this.departmentName = valueFactory.createIRI(Store.getDefaultNs(), "departmentName");
 	}
 	
-
 	@Override
 	public void create(Department department) {
-
-		IRI type = store.getValueFactory().createIRI(Store.getDefaultNs(), "Department");
-		IRI departmentId = store.getValueFactory().createIRI(Store.getDefaultNs(), "departmentId");
-		IRI departmentName = store.getValueFactory().createIRI(Store.getDefaultNs(), "departmentName");
+		IRI subject = valueFactory.createIRI(Store.getDefaultNs(), "department_" + department.getDepartmentId());
+		Literal label = valueFactory.createLiteral(department.getDepartmentName());
+		Literal idLiteral = valueFactory.createLiteral(department.getDepartmentId());
 		
-		Random rand = new Random();
-		Integer  n = rand.nextInt(50) + 1;
-		String id = department.getDepartmentId() != null ? department.getDepartmentId() : n.toString();
-		
-		IRI subject = store.getValueFactory().createIRI(Store.getDefaultNs(), "department_"+id);
-		Literal label = store.getValueFactory().createLiteral(department.getDepartmentName());
-		Literal idLiteral = store.getValueFactory().createLiteral(id);
-		
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
-			conn.add(subject, RDF.TYPE, type);
-			conn.add(subject, RDFS.LABEL, label);
-			conn.add(subject, departmentId, idLiteral);
-			conn.add(subject, departmentName, label);
-		}
-
+		connection.add(subject, RDF.TYPE, type);
+		connection.add(subject, RDFS.LABEL, label);
+		connection.add(subject, departmentId, idLiteral);
+		connection.add(subject, departmentName, label);
 	}
 
 	@Override
 	public void delete(String id) {
-		// TODO Auto-generated method stub
+		throw new NotImplementedException("not implemented");
 	}
 
 	@Override
 	public Department get(String id) throws Exception {
 		
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
-			String queryString = 
-					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
-					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
-					"SELECT ?id ?name \n" + 
-					"WHERE {\n" + 
-					" ?s a dp:Department ; \n" +
-					" dp:departmentId ?id ; \n" +
-					" dp:departmentName ?name ; \n" +
-					" .\n" +
-					"}";
-	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("id", store.getValueFactory().createLiteral(id));
-	    	
-	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
-	    	{
-	    		while (result.hasNext()) 
-	    		{  
-	    			BindingSet bindingSet = result.next();
-	    			Department department = new Department();
-	    			department.setDepartmentId(bindingSet.getValue("id").stringValue());
-	    			department.setDepartmentName(bindingSet.getValue("name").stringValue());
-	    			
-	    			return department;
-	    		}
-	    	}
+		String queryString = 
+				"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
+				"SELECT ?id ?name \n" + 
+				"WHERE {\n" + 
+				" ?s a dp:Department ; \n" +
+				" dp:departmentId ?id ; \n" +
+				" dp:departmentName ?name ; \n" +
+				" .\n" +
+				"}";
+		TupleQuery tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+		tupleQuery.setBinding("id", valueFactory.createLiteral(id));
+		
+		try (TupleQueryResult result = tupleQuery.evaluate()) 
+		{
+			while (result.hasNext()) 
+			{  
+				BindingSet bindingSet = result.next();
+				Department department = new Department();
+				department.setDepartmentId(bindingSet.getValue("id").stringValue());
+				department.setDepartmentName(bindingSet.getValue("name").stringValue());
+				
+				return department;
+			}
 		}
 		
 		throw new Exception();
@@ -96,13 +87,12 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 
 	@Override
 	public void update(Department department) {
-		// TODO Auto-generated method stub
+		throw new NotImplementedException("not implemented");
 	}
 
-	public List<Department> search(String name) {
+	public List<Department> searchEmployeeDepartment(String employeeName) {
 		List<Department> departments = new ArrayList<Department>();
 		
-		try (RepositoryConnection conn = store.getRepository().getConnection()) {
 			String queryString = 
 					"PREFIX dp: <"+Store.getDefaultNs() +"> \n" + 
 					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
@@ -117,8 +107,8 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 					+ "dp:hasDepartment ?department ;"
 					+ ". \n" +
 					"}";
-	    	TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-	    	tupleQuery.setBinding("employeeName", store.getValueFactory().createLiteral(name));
+	    	TupleQuery tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+	    	tupleQuery.setBinding("employeeName", valueFactory.createLiteral(employeeName));
 	    	
 	    	try (TupleQueryResult result = tupleQuery.evaluate()) 
 	    	{
@@ -133,9 +123,9 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 	    			departments.add(dep);
 	    		}
 	    	}
-		}
 		
 		return departments;
 	}
+
 
 }

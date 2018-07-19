@@ -55,9 +55,9 @@ public class DepartmentResourceTest {
 	@Test
 	public void searchTest() throws Exception {
 		final String name = "name";
-		when(dao.search(name)).thenReturn(departments);
+		when(dao.searchEmployeeDepartment(name)).thenReturn(departments);
 		ArrayList<Department> dep = (ArrayList<Department>) resource.search(name);
 		assertThat(dep).isEqualTo(departments);
-		verify(dao).search(name);
+		verify(dao).searchEmployeeDepartment(name);
 	}
 }
