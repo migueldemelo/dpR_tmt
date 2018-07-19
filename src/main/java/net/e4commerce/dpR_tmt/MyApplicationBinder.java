@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.e4commerce.dpR_tmt;
 
 import javax.inject.Singleton;
@@ -10,7 +13,15 @@ import net.e4commerce.dpR_tmt.dao.DepartmentDAO;
 import net.e4commerce.dpR_tmt.dao.EmployeeDAO;
 import net.e4commerce.dpR_tmt.dao.Store;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MyApplicationBinder.
+ */
 public class MyApplicationBinder extends AbstractBinder {
+    
+    /* (non-Javadoc)
+     * @see org.glassfish.hk2.utilities.binding.AbstractBinder#configure()
+     */
     @Override
     protected void configure() {
     	Store store = new Store();

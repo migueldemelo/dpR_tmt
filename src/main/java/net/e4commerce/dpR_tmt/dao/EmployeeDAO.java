@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.e4commerce.dpR_tmt.dao;
 
 import java.util.ArrayList;
@@ -19,17 +22,31 @@ import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.query.Update;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
-import org.eclipse.rdf4j.repository.sail.SailRepository;
 
 import net.e4commerce.dpR_tmt.model.Employee;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EmployeeDAO.
+ */
 @Singleton
 public class EmployeeDAO extends DataAccessObject implements DataAccessInterface<Employee> {
 
+	/** The type. */
 	private final IRI type;
+	
+	/** The has department. */
 	private final IRI hasDepartment;
+	
+	/** The employee id. */
 	private final IRI employeeId;
 
+	/**
+	 * Instantiates a new employee DAO.
+	 *
+	 * @param valueFactory the value factory
+	 * @param connectionection the connectionection
+	 */
 	@Inject
 	public EmployeeDAO(ValueFactory valueFactory, RepositoryConnection connectionection) {
 		super(valueFactory, connectionection);
@@ -38,6 +55,9 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		employeeId = valueFactory.createIRI(Store.getDefaultNs(), "employeeId");
 	}
 
+	/* (non-Javadoc)
+	 * @see net.e4commerce.dpR_tmt.dao.DataAccessInterface#create(java.lang.Object)
+	 */
 	@Override
 	public void create(Employee employee) {
 
@@ -57,6 +77,9 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 					valueFactory.createIRI(Store.getDefaultNs(), "department_" + employee.getDepartmentId()));
 	}
 
+	/* (non-Javadoc)
+	 * @see net.e4commerce.dpR_tmt.dao.DataAccessInterface#delete(java.lang.String)
+	 */
 	@Override
 	public void delete(String id) {
 		String queryString = 
@@ -71,6 +94,9 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		update.execute();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.e4commerce.dpR_tmt.dao.DataAccessInterface#get(java.lang.String)
+	 */
 	public Employee get(String id) throws Exception {
 		Employee employee = new Employee();
 		String queryString = 
@@ -103,6 +129,9 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		return employee;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.e4commerce.dpR_tmt.dao.DataAccessInterface#update(java.lang.Object)
+	 */
 	@Override
 	public void update(Employee employee) {
 		if (employee.getDateOfBirth() != null) {
@@ -114,6 +143,12 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		}
 	}
 
+	/**
+	 * Update dob.
+	 *
+	 * @param employeeId the employee id
+	 * @param dob the dob
+	 */
 	private void updateDob(String employeeId, String dob) {
 		String queryString = 
 				  "PREFIX dp: <" + Store.getDefaultNs() + "> \n"
@@ -131,6 +166,12 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		update.execute();
 	}
 
+	/**
+	 * Update department.
+	 *
+	 * @param employeeId the employee id
+	 * @param departmentId the department id
+	 */
 	private void updateDepartment(String employeeId, String departmentId) {
 		String queryString = 
 				  "PREFIX dp: <" + Store.getDefaultNs() + "> \n"
@@ -147,6 +188,12 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 		update.execute();
 	}
 
+	/**
+	 * Search.
+	 *
+	 * @param name the name
+	 * @return the list
+	 */
 	public List<Employee> search(String name) {
 		List<Employee> employees = new ArrayList<Employee>();
 

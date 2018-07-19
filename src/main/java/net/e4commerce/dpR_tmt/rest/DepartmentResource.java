@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.e4commerce.dpR_tmt.rest;
 
 import java.util.List;
@@ -17,17 +20,34 @@ import net.e4commerce.dpR_tmt.dao.DepartmentDAO;
 import net.e4commerce.dpR_tmt.model.Department;
 import net.e4commerce.dpR_tmt.model.Employee;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DepartmentResource.
+ */
 @Path("department")
 @Singleton
 public class DepartmentResource {
 	
+	/** The dao. */
 	private final DepartmentDAO dao;
 	
+	/**
+	 * Instantiates a new department resource.
+	 *
+	 * @param dao the dao
+	 */
 	@Inject 
 	public DepartmentResource(DepartmentDAO dao) {
 		this.dao = dao;
 	}
 	
+	/**
+	 * Gets the.
+	 *
+	 * @param id the id
+	 * @return the department
+	 * @throws Exception the exception
+	 */
 	@GET
 	@Path("{departmentId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -35,12 +55,23 @@ public class DepartmentResource {
 		return dao.get(id);
     }
 
+	/**
+	 * Creates the.
+	 *
+	 * @param department the department
+	 */
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
     public void create(Department department) {
 		dao.create(department);
     }
 	
+	/**
+	 * Search.
+	 *
+	 * @param name the name
+	 * @return the list
+	 */
 	@GET
 	@Path("search")
 	@Produces(MediaType.APPLICATION_JSON)

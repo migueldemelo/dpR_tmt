@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package net.e4commerce.dpR_tmt.dao;
 
 import java.util.ArrayList;
@@ -20,13 +23,30 @@ import org.eclipse.rdf4j.repository.RepositoryConnection;
 
 import net.e4commerce.dpR_tmt.model.Department;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DepartmentDAO.
+ *
+ * @author delirio
+ */
 @Singleton
 public class DepartmentDAO extends DataAccessObject implements DataAccessInterface<Department> {
 
+	/** The type. */
 	private final IRI type;
+	
+	/** The department id. */
 	private final IRI departmentId;
+	
+	/** The department name. */
 	private final IRI departmentName;
 	
+	/**
+	 * Instantiates a new department DAO.
+	 *
+	 * @param valueFactory the value factory
+	 * @param connection the connection
+	 */
 	@Inject
 	public DepartmentDAO(ValueFactory valueFactory, RepositoryConnection connection) {
 		super(valueFactory, connection);
@@ -36,6 +56,10 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 		this.departmentName = valueFactory.createIRI(Store.getDefaultNs(), "departmentName");
 	}
 	
+	
+	/* (non-Javadoc)
+	 * @see net.e4commerce.dpR_tmt.dao.DataAccessInterface#create(java.lang.Object)
+	 */
 	@Override
 	public void create(Department department) {
 		IRI subject = valueFactory.createIRI(Store.getDefaultNs(), "department_" + department.getDepartmentId());
@@ -48,11 +72,17 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 		connection.add(subject, departmentName, label);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.e4commerce.dpR_tmt.dao.DataAccessInterface#delete(java.lang.String)
+	 */
 	@Override
 	public void delete(String id) {
 		throw new NotImplementedException("not implemented");
 	}
 
+	/* (non-Javadoc)
+	 * @see net.e4commerce.dpR_tmt.dao.DataAccessInterface#get(java.lang.String)
+	 */
 	@Override
 	public Department get(String id) throws Exception {
 		
@@ -85,11 +115,20 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 		throw new Exception();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.e4commerce.dpR_tmt.dao.DataAccessInterface#update(java.lang.Object)
+	 */
 	@Override
 	public void update(Department department) {
 		throw new NotImplementedException("not implemented");
 	}
 
+	/**
+	 * Search employee department.
+	 *
+	 * @param employeeName the employee name
+	 * @return the list
+	 */
 	public List<Department> searchEmployeeDepartment(String employeeName) {
 		List<Department> departments = new ArrayList<Department>();
 		
