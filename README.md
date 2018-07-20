@@ -1,6 +1,8 @@
 # dpR_tmt
 
-## Requirement:
+dpR_tmt is a REST API implemented as an in-memory RDF Store using RDF4J. The code illustrates how to wire Inversion of Control to Data Access Objects implementing RDF4J, as well as exposing REST resources as JAX-RS as the user interface. This is a Maven project, configured to run with the Maven Jetty plugin, which also runs the integration test phase during the build. Te Jetty plugin can also run the project and expose it's HTTP services on port 8080.
+
+## Requirements:
 
 Implement a REST API​ to create. update, delete and read data for an employee and their
 department. We want to store below data
