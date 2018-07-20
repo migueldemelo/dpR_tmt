@@ -38,9 +38,13 @@ Jetty on port 8080. This will allow you to run the app with your HTTP Client of 
 *Below is the list of rest endpoints satisfying the requirements described above, you can run them manually using any standard HTTP client,
 or you can [download Postman](https://www.getpostman.com/apps) and load the test collection stored in [dpR_tmt.postman_collection.json](https://github.com/migueldemelo/dpR_tmt/blob/master/src/test/resources/dpR_tmt.postman_collection.json).*
 
-### create a department:
->**PUT** "http://localhost:8080/resources/department"
+## REST Endpoints:
+
+#### create a department:
+>**PUT** [http://localhost:8080/resources/department]
+
 **body**
+
 ...
 {
 	"departmentId": "1235",
@@ -48,12 +52,14 @@ or you can [download Postman](https://www.getpostman.com/apps) and load the test
 }
 ...
 
-### department details:
->**GET** "http://localhost:8080/resources/department/1235"
+#### department details
+>**GET** [http://localhost:8080/resources/department/1235]
 
-### create employee 1:
->**PUT** "http://localhost:8080/resources/employee"
+#### create employee 1:
+>**PUT** [http://localhost:8080/resources/employee]
+
 **body**
+
 ...
 {
 	"employeeId": "1235",
@@ -63,15 +69,17 @@ or you can [download Postman](https://www.getpostman.com/apps) and load the test
 }
 ...
 
-### employee 1 details:
->**GET** "http://localhost:8080/resources/employee/1235"
+#### employee 1 details:
+>**GET** [http://localhost:8080/resources/employee/1235]
 
-### update employee 1 date of birth
->**POST** "http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05"
+#### update employee 1 date of birth
+>**POST** [http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05]
 
-### create employee 2
->**PUT** "http://localhost:8080/resources/employee"
+#### create employee 2
+>**PUT** [http://localhost:8080/resources/employee]
+
 **body**
+
 ...
 {
 	"employeeId": "1238",
@@ -80,17 +88,17 @@ or you can [download Postman](https://www.getpostman.com/apps) and load the test
 }
 ...
 
-### employee 2 details
->**GET** "http://localhost:8080/resources/employee/1238"
+#### employee 2 details
+>**GET** [http://localhost:8080/resources/employee/1238]
 
-### add employee 2 to a department
->**POST** "http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235"
+#### add employee 2 to a department
+>**POST** [http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235]
 
-### search employee by name:
->**GET** "http://localhost:8080/resources/employee/search?name=employeeName"
+#### search employee by name:
+>**GET** [http://localhost:8080/resources/employee/search?name=employeeName]
 
-### search department by employee name:
->**GET** "http://localhost:8080/resources/department/search?employeeName=employeeName"
+#### search department by employee name:
+>**GET** [http://localhost:8080/resources/department/search?employeeName=employeeName]
 
-### delete employee 1:
->**DELETE** "http://localhost:8080/resources/employee/1235"
+#### delete employee 1:
+>**DELETE** [http://localhost:8080/resources/employee/1235]
