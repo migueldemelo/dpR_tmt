@@ -1,13 +1,13 @@
 # dpR_tmt
 
-#Requirement:
+## Requirement:
 
 Implement a REST API​ to create. update, delete and read data for an employee and their
 department. We want to store below data
 For employee we want to store their employeeId, name, dateOfBirth and departmentId.
 For department we want to store departmentId and departmentName.
 
-#Your implementation should cover below use cases
+**Your implementation should cover below use cases**
 
 1. I want to create a department with above details
 2. I want to create an employee record with above details
@@ -18,7 +18,7 @@ For department we want to store departmentId and departmentName.
 7. I want to search departmentName for a given employee name
 
 
-#Technical requirements:
+**Technical requirements:**
 
 1. Store all the data in memory
 2. Data should be stored as RDF internally
@@ -29,59 +29,68 @@ For department we want to store departmentId and departmentName.
 7. Create your repo on Github and do reguler commits
 8. Provide README to explain how to run your code
 
-#Run app:
-mvn clean install jetty:run
+## Running the application:
+The application build framework is maven, configured to run with the Jetty Servlet Container plugin. By running
+the command below, the build will compile the code, run Unit, and integration tests, and finally it will start 
+Jetty on port 8080. This will allow you to run the app with your HTTP Client of choice. 
+>**mvn clean install jetty:run**
 
-Below is the list of rest end-points satisfying the requirements described above, you can run them manually using any standard HTTP client,
-or you can download Postman (https://www.getpostman.com/apps) and load the test collection stored in /src/test/resources/dpR_tmt.postman_collection.json.
+*Below is the list of rest endpoints satisfying the requirements described above, you can run them manually using any standard HTTP client,
+or you can [download Postman](https://www.getpostman.com/apps) and load the test collection stored in [dpR_tmt.postman_collection.json](https://github.com/migueldemelo/dpR_tmt/blob/master/src/test/resources/dpR_tmt.postman_collection.json).*
 
-#create a department:
-PUT "http://localhost:8080/resources/department"
-
+### create a department:
+>**PUT** "http://localhost:8080/resources/department"
+**body**
+...
 {
 	"departmentId": "1235",
 	"departmentName": "SomeDepartment"
 }
+...
 
-#department details:
-GET "http://localhost:8080/resources/department/1235"
+### department details:
+>**GET** "http://localhost:8080/resources/department/1235"
 
-#create employee 1:
-PUT "http://localhost:8080/resources/employee"
-
+### create employee 1:
+>**PUT** "http://localhost:8080/resources/employee"
+**body**
+...
 {
 	"employeeId": "1235",
 	"name": "employeeName",
 	"dateOfBirth": "1971-10-05",
 	"departmentId": "1235"
 }
+...
 
-#employee 1 details:
-GET "http://localhost:8080/resources/employee/1235"
+### employee 1 details:
+>**GET** "http://localhost:8080/resources/employee/1235"
 
-#update employee 1 date of birth
-POST "http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05"
+### update employee 1 date of birth
+>**POST** "http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05"
 
-#create employee 2
-PUT "http://localhost:8080/resources/employee"
-
+### create employee 2
+>**PUT** "http://localhost:8080/resources/employee"
+**body**
+...
 {
 	"employeeId": "1238",
 	"name": "employeeName",
 	"dateOfBirth": "1971-10-05"
 }
+...
 
-#employee 2 details
-GET "http://localhost:8080/resources/employee/1238"
+### employee 2 details
+>**GET** "http://localhost:8080/resources/employee/1238"
 
-#add employee 2 to a department
-POST "http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235"
+### add employee 2 to a department
+>**POST** "http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235"
 
-#search employee by name:
-GET "http://localhost:8080/resources/employee/search?name=employeeName"
+### search employee by name:
+>**GET** "http://localhost:8080/resources/employee/search?name=employeeName"
 
-#search department by employee name:
-GET "http://localhost:8080/resources/department/search?employeeName=employeeName"
+### search department by employee name:
+>**GET** "http://localhost:8080/resources/department/search?employeeName=employeeName"
 
-#delete employee 1:
-DELETE "http://localhost:8080/resources/employee/1235"
+### delete employee 1:
+>**DELETE** "http://localhost:8080/resources/employee/1235"
