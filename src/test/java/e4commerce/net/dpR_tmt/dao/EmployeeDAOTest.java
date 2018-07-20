@@ -29,7 +29,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import net.e4commerce.dpR_tmt.dao.EmployeeDAO;
-import net.e4commerce.dpR_tmt.model.Department;
 import net.e4commerce.dpR_tmt.model.Employee;
 
 @RunWith(MockitoJUnitRunner.class)

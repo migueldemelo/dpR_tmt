@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.e4commerce.dpR_tmt;
 
 import javax.inject.Singleton;
@@ -13,9 +10,14 @@ import net.e4commerce.dpR_tmt.dao.DepartmentDAO;
 import net.e4commerce.dpR_tmt.dao.EmployeeDAO;
 import net.e4commerce.dpR_tmt.dao.Store;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class MyApplicationBinder.
+ * The Class MyApplicationBinder wires inection of objects required for the application
+ *  
+ *  
+ * @author      Miguel de Melo
+ * @version     1.0
+ * @since       1.0
+ * 
  */
 public class MyApplicationBinder extends AbstractBinder {
     

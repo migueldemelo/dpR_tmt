@@ -1,45 +1,42 @@
-/*
- * 
- */
 package net.e4commerce.dpR_tmt.dao;
 
-import javax.inject.Singleton;
-
-// TODO: Auto-generated Javadoc
 /**
- * The Interface DataAccessInterface.
+ * The Interface DataAccessInterface defines standard data access objects operations
  *
  * @param <T> the generic type
+ * 
+ * @author      Miguel de Melo
+ * @version     1.0
+ * @since       1.0
  */
-@Singleton
 public interface DataAccessInterface<T>
 {
 	
 	/**
-	 * Creates the.
+	 * Creates an entity being presisted
 	 *
-	 * @param subject the subject
+	 * @param subject the subject entity
 	 */
 	public void create(T subject);
 	
 	/**
-	 * Delete.
+	 * Deletes an entity.
 	 *
-	 * @param id the id
+	 * @param id the id of the entity
 	 */
 	public void delete(String id);
 	
 	/**
-	 * Gets the.
+	 * Gets an instance of an entity
 	 *
-	 * @param id the id
-	 * @return the t
+	 * @param id the entity identifier
+	 * @return the implementation entity type
 	 * @throws Exception the exception
 	 */
 	public T get(String id) throws Exception;
 	
 	/**
-	 * Update.
+	 * Update aspects of an entity.
 	 *
 	 * @param subject the subject
 	 */

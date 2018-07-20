@@ -1,11 +1,12 @@
-/*
- * 
- */
 package net.e4commerce.dpR_tmt.model;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Department.
+ * The Class Department represents a Department entity.
+ * 
+ * @author      Miguel de Melo
+ * @version     1.0
+ * @since       1.0
  */
 public class Department {
 	

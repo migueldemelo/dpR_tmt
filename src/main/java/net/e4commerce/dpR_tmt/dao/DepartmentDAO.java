@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.e4commerce.dpR_tmt.dao;
 
 import java.util.ArrayList;
@@ -23,29 +20,31 @@ import org.eclipse.rdf4j.repository.RepositoryConnection;
 
 import net.e4commerce.dpR_tmt.model.Department;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DepartmentDAO.
- *
- * @author delirio
+ * The Class DepartmentDAO is responsible for data access operations
+ * related to a Department.
+ *  
+ * @author      Miguel de Melo
+ * @version     1.0
+ * @since       1.0
  */
 @Singleton
 public class DepartmentDAO extends DataAccessObject implements DataAccessInterface<Department> {
 
-	/** The type. */
+	/** The standard RDF type IRI for the Department entity */
 	private final IRI type;
 	
-	/** The department id. */
+	/** The standard IRI for a department id predicate. */
 	private final IRI departmentId;
 	
-	/** The department name. */
+	/** The standard IRI for a department name predicate. */
 	private final IRI departmentName;
 	
 	/**
 	 * Instantiates a new department DAO.
 	 *
-	 * @param valueFactory the value factory
-	 * @param connection the connection
+	 * @param valueFactory the value factory is used to build IRI and Literal values
+	 * @param connection the connection provides read/write operations with the store
 	 */
 	@Inject
 	public DepartmentDAO(ValueFactory valueFactory, RepositoryConnection connection) {
@@ -124,10 +123,12 @@ public class DepartmentDAO extends DataAccessObject implements DataAccessInterfa
 	}
 
 	/**
-	 * Search employee department.
+	 * Search for an employee's department by providing the employee's name.
+	 * Produces a list of deparments an employee may belong to, or a department more than 
+	 * one employee with the same name belong to.
 	 *
 	 * @param employeeName the employee name
-	 * @return the list
+	 * @return a list of departments
 	 */
 	public List<Department> searchEmployeeDepartment(String employeeName) {
 		List<Department> departments = new ArrayList<Department>();

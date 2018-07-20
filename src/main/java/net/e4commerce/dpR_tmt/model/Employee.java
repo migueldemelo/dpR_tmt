@@ -1,11 +1,11 @@
-/*
- * 
- */
 package net.e4commerce.dpR_tmt.model;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Employee.
+ * The Class Employee represents an Employee entity.
+ * 
+ * @author      Miguel de Melo
+ * @version     1.0
+ * @since       1.0
  */
 public class Employee {
 	

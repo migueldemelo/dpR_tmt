@@ -13,21 +13,26 @@ import org.eclipse.rdf4j.sail.memory.MemoryStore;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Store.
+ * The Class Store holds an instance of an in-memory RDF4J store.
+ * this instance is maintained as a singleton through the application lifecycle.
+ * 
+ * @author      Miguel de Melo
+ * @version     1.0
+ * @since       1.0
  */
 @Singleton
 public class Store {
 	
-	/** The Constant DEFAULT_NS. */
+	/** The Constant DEFAULT_NS holds the default namespace used in app specific IRIs. */
 	private static final String DEFAULT_NS = "http://e4commerce.net/dpR_tmt/";
 	
-	/** The repository. */
+	/** The repository instance. */
 	private final SailRepository repository;
 	
-	/** The value factory. */
+	/** The value factory is used to build IRI and Literal values. */
 	private final ValueFactory valueFactory;
 	
-	/** The connection. */
+	/** The connection provides read/write operations with the store. */
 	private final RepositoryConnection connection;
 	
 	/**

@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.e4commerce.dpR_tmt.rest;
 
 import java.util.List;
@@ -20,21 +17,24 @@ import net.e4commerce.dpR_tmt.dao.DepartmentDAO;
 import net.e4commerce.dpR_tmt.model.Department;
 import net.e4commerce.dpR_tmt.model.Employee;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DepartmentResource.
+ * The Class DepartmentResource provides a REST endpoint for a Department.
+ * 
+ * @author      Miguel de Melo
+ * @version     1.0
+ * @since       1.0
  */
 @Path("department")
 @Singleton
 public class DepartmentResource {
 	
-	/** The dao. */
+	/** The data access object used to persist data to a store. */
 	private final DepartmentDAO dao;
 	
 	/**
 	 * Instantiates a new department resource.
 	 *
-	 * @param dao the dao
+	 * @param dao the data access object used to persist data to a store.
 	 */
 	@Inject 
 	public DepartmentResource(DepartmentDAO dao) {
@@ -42,11 +42,12 @@ public class DepartmentResource {
 	}
 	
 	/**
-	 * Gets the.
+	 * Gets a Department resource.
 	 *
-	 * @param id the id
-	 * @return the department
-	 * @throws Exception the exception
+	 * @param id the department id
+	 * @return a Department resource
+	 * @throws Exception is thrown when no department is found with that id 
+	 * TODO: return an HTTP not found exception
 	 */
 	@GET
 	@Path("{departmentId}")
@@ -56,9 +57,9 @@ public class DepartmentResource {
     }
 
 	/**
-	 * Creates the.
+	 * Creates a Department resource.
 	 *
-	 * @param department the department
+	 * @param department a new department
 	 */
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -67,10 +68,12 @@ public class DepartmentResource {
     }
 	
 	/**
-	 * Search.
+	 * Search for an employee's department by providing the employee's name.
+	 * Produces a list of deparments an employee may belong to, or a department more than 
+	 * one employee with the same name belong to.
 	 *
-	 * @param name the name
-	 * @return the list
+	 * @param name the employee name
+	 * @return a list of departments
 	 */
 	@GET
 	@Path("search")

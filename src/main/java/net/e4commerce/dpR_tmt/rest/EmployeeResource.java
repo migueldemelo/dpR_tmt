@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.e4commerce.dpR_tmt.rest;
 
 import java.util.List;
@@ -22,21 +19,20 @@ import net.e4commerce.dpR_tmt.dao.DepartmentDAO;
 import net.e4commerce.dpR_tmt.dao.EmployeeDAO;
 import net.e4commerce.dpR_tmt.model.Employee;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class EmployeeResource.
+ * The Class EmployeeResource provides a REST endpoint for an Employee.
  */
 @Path("/employee")
 @Singleton
 public class EmployeeResource {
 	
-	/** The dao. */
+	/** The data access object used to persist data to a store. */
 	private final EmployeeDAO dao;
 	
 	/**
 	 * Instantiates a new employee resource.
 	 *
-	 * @param dao the dao
+	 * @param dao the data access object used to persist data to a store.
 	 */
 	@Inject 
 	public EmployeeResource(EmployeeDAO dao) {
@@ -44,11 +40,12 @@ public class EmployeeResource {
 	}
 	
 	/**
-	 * Gets the.
+	 * Gets an Employee resource.
 	 *
-	 * @param id the id
-	 * @return the employee
-	 * @throws Exception the exception
+	 * @param id the Employee id
+	 * @return an Employee resource
+	 * @throws Exception is thrown when no department is found with that id 
+	 * TODO: return an HTTP not found exception
 	 */
 	@GET
 	@Path("{employeeId}")
@@ -58,9 +55,9 @@ public class EmployeeResource {
     }
 
 	/**
-	 * Creates the.
+	 * Creates an Employee resource.
 	 *
-	 * @param employee the employee
+	 * @param employee a new employee
 	 */
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -69,9 +66,9 @@ public class EmployeeResource {
     }
 
 	/**
-	 * Delete.
+	 * Delete Employee.
 	 *
-	 * @param id the id
+	 * @param id the id of the Employee to be deleted
 	 */
 	@DELETE
 	@Path("{employeeId}")
@@ -80,10 +77,11 @@ public class EmployeeResource {
     }
 
 	/**
-	 * Update dob.
+	 * Updates the date of birth of an employee by replacing the date of birth 
+	 * percisted at creation time.
 	 *
-	 * @param id the id
-	 * @param dob the dob
+	 * @param id the Employee id
+	 * @param dob the date of birth
 	 */
 	@POST
 	@Path("{employeeId}/updateDob")
@@ -95,9 +93,9 @@ public class EmployeeResource {
     }
 
 	/**
-	 * Adds the department.
+	 * Updates the employee record with a new department.
 	 *
-	 * @param id the id
+	 * @param id the employee id
 	 * @param departmentId the department id
 	 */
 	@POST
@@ -110,10 +108,10 @@ public class EmployeeResource {
     }
 	
 	/**
-	 * Search.
+	 * Searches for employees by name.
 	 *
 	 * @param name the name
-	 * @return the list
+	 * @return a list of Employee
 	 */
 	@GET
 	@Path("search")

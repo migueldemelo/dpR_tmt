@@ -1,6 +1,3 @@
-/*
- * 
- */
 package net.e4commerce.dpR_tmt.dao;
 
 import java.util.ArrayList;
@@ -25,20 +22,25 @@ import org.eclipse.rdf4j.repository.RepositoryConnection;
 
 import net.e4commerce.dpR_tmt.model.Employee;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class EmployeeDAO.
+ * The Class EmployeeDAO is responsible for data access operations
+ * related to an Employee.
+ * 
+ * @author      Miguel de Melo
+ * @version     1.0
+ * @since       1.0
  */
+
 @Singleton
 public class EmployeeDAO extends DataAccessObject implements DataAccessInterface<Employee> {
 
-	/** The type. */
+	/** The standard RDF type IRI for the Employee entity  */
 	private final IRI type;
 	
-	/** The has department. */
+	/** The standard IRI for a hasDepartment predicate. */
 	private final IRI hasDepartment;
 	
-	/** The employee id. */
+	/** The standard IRI for an employee id predicate. */
 	private final IRI employeeId;
 
 	/**
@@ -144,10 +146,11 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	}
 
 	/**
-	 * Update dob.
+	 * Updates the date of birth of an employee by replacing the date of birth 
+	 * percisted at creation time.
 	 *
 	 * @param employeeId the employee id
-	 * @param dob the dob
+	 * @param dob the date of birth
 	 */
 	private void updateDob(String employeeId, String dob) {
 		String queryString = 
@@ -167,7 +170,7 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	}
 
 	/**
-	 * Update department.
+	 * Updates the employee record with a new department.
 	 *
 	 * @param employeeId the employee id
 	 * @param departmentId the department id
@@ -189,10 +192,10 @@ public class EmployeeDAO extends DataAccessObject implements DataAccessInterface
 	}
 
 	/**
-	 * Search.
+	 * Searches for employees by name.
 	 *
 	 * @param name the name
-	 * @return the list
+	 * @return a list of Employee
 	 */
 	public List<Employee> search(String name) {
 		List<Employee> employees = new ArrayList<Employee>();
