@@ -41,64 +41,78 @@ or you can [download Postman](https://www.getpostman.com/apps) and load the test
 ## REST Endpoints:
 
 #### create a department:
->**PUT** [http://localhost:8080/resources/department]
+>**PUT** http://localhost:8080/resources/department
 
 **body**
 
-...
-{
-	"departmentId": "1235",
-	"departmentName": "SomeDepartment"
-}
-...
+    {
+    	"departmentId": "1235",
+    	"departmentName": "SomeDepartment"
+    }
+
+===
 
 #### department details
->**GET** [http://localhost:8080/resources/department/1235]
+>**GET** http://localhost:8080/resources/department/1235
+
+===
 
 #### create employee 1:
->**PUT** [http://localhost:8080/resources/employee]
+>**PUT** http://localhost:8080/resources/employee
 
 **body**
 
-...
-{
-	"employeeId": "1235",
-	"name": "employeeName",
-	"dateOfBirth": "1971-10-05",
-	"departmentId": "1235"
-}
-...
+    {
+    	"employeeId": "1235",
+    	"name": "employeeName",
+    	"dateOfBirth": "1971-10-05",
+    	"departmentId": "1235"
+    }
+
+===
 
 #### employee 1 details:
->**GET** [http://localhost:8080/resources/employee/1235]
+>**GET** http://localhost:8080/resources/employee/1235
+
+===
 
 #### update employee 1 date of birth
->**POST** [http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05]
+>**POST** http://localhost:8080/resources/employee/1235/updateDob?dob=1971-11-05
+
+===
 
 #### create employee 2
->**PUT** [http://localhost:8080/resources/employee]
+>**PUT** http://localhost:8080/resources/employee
 
 **body**
 
-...
-{
-	"employeeId": "1238",
-	"name": "employeeName",
-	"dateOfBirth": "1971-10-05"
-}
-...
+    {
+    	"employeeId": "1238",
+    	"name": "employeeName",
+    	"dateOfBirth": "1971-10-05"
+    }
+
+===
 
 #### employee 2 details
->**GET** [http://localhost:8080/resources/employee/1238]
+>**GET** http://localhost:8080/resources/employee/1238
+
+===
 
 #### add employee 2 to a department
->**POST** [http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235]
+>**POST** http://localhost:8080/resources/employee/1238/addDepartment?departmentId=1235
+
+===
 
 #### search employee by name:
->**GET** [http://localhost:8080/resources/employee/search?name=employeeName]
+>**GET** http://localhost:8080/resources/employee/search?name=employeeName
+
+===
 
 #### search department by employee name:
->**GET** [http://localhost:8080/resources/department/search?employeeName=employeeName]
+>**GET** http://localhost:8080/resources/department/search?employeeName=employeeName
+
+===
 
 #### delete employee 1:
->**DELETE** [http://localhost:8080/resources/employee/1235]
+>**DELETE** http://localhost:8080/resources/employee/1235
